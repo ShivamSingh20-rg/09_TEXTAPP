@@ -17,7 +17,7 @@ const navigate = useNavigate();
     console.log("Signup Data:", formData);
     const { username, email, password } = formData;
    
-  axios.post('http://localhost:3001/signup', {username: username,email: email,password: password})
+  axios.post(' /api/signup', {username: username,email: email,password: password})
   .then((res)=> {
     console.log('succesfully registerd', res.data)
     navigate("/login");
