@@ -10,7 +10,7 @@ function Dashboard() {
   const [input, setInput] = useState("");
   const [editingId, setEditingId] = useState(null);
 
-  const BASE_URL = "https://09-textapp-shivamsingh20-rgs-projects.vercel.app";
+  const BASE_URL = "http://localhost:3001";
 // 1. Get the token from storage
   
   useEffect(() => {

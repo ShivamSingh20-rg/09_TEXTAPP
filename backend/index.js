@@ -7,8 +7,10 @@ const bcrypt = require('bcrypt')
 const jwt =require('jsonwebtoken')
 const configs = require('./config')
 const protect = require('./Protect')
-mongoose.connect("mongodb+srv://eshivamsingh20_db_user:Shivam1234@shivamdb.qyvvqgu.mongodb.net/TODO-DB");
-
+ 
+mongoose.connect(configs.MONGO_URL)
+  .then(() => console.log("Connected to MongoDB!"))
+  .catch((err) => console.log("Database connection error:", err));
 
 const app = express();
 app.use(express.json());
