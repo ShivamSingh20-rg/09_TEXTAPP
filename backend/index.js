@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 const jwt =require('jsonwebtoken')
 const configs = require('./config')
 const protect = require('./Protect')
-mongoose.connect("mongodb://127.0.0.1:27017/test");
+mongoose.connect("mongodb+srv://eshivamsingh20_db_user:Shivam1234@shivamdb.qyvvqgu.mongodb.net/TODO-DB");
 
 
 const app = express();
