@@ -15,12 +15,12 @@ mongoose.connect(configs.MONGO_URL)
 const app = express();
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",  
+ origin: ["http://localhost:5173", /\.vercel\.app$/],  
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-app.post("/add", protect,(req, res) => {
+app.post("/api/add", protect,(req, res) => {
   const tasks = req.body.tasks;
 console.log("Logged in User ID:", req.user)
   TodoSchema.create({
@@ -33,14 +33,14 @@ console.log("Logged in User ID:", req.user)
     });
 });
 
-app.delete("/delete/:id", (req, res) => {
+app.delete("/api/delete/:id", (req, res) => {
   const { id } = req.params;
   TodoSchema.findByIdAndDelete(id).then(
     res.status(200).json({ success: true, id: id }),
   );
 });
 
-app.put("/update/:id",protect,(req, res) => { 
+app.put("/api/update/:id",protect,(req, res) => { 
   const { id } = req.params;
   const { tasks } = req.body;
 
@@ -58,7 +58,7 @@ app.put("/update/:id",protect,(req, res) => {
   );
 });
 
-app.post('/signup', async (req, res) => {
+app.post('/api/signup', async (req, res) => {
   const { email, password,username } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
@@ -69,7 +69,7 @@ app.post('/signup', async (req, res) => {
   }
 });
 
-app.post('/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   const user = await UserSC.findOne({ email });
   
@@ -84,9 +84,11 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get("/get", protect,(req, res) => {
+app.get("/api/get", protect,(req, res) => {
   TodoSchema.find({ userId: req.user }).then((result) => res.json(result));
 });
-app.listen(3001, () => {
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
   console.log("server is runnig on port");
 });

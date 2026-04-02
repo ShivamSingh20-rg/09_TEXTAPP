@@ -10,7 +10,7 @@ function Dashboard() {
   const [input, setInput] = useState("");
   const [editingId, setEditingId] = useState(null);
 
-  const BASE_URL = "http://localhost:3001";
+  // const BASE_URL = "http://localhost:3001";
 // 1. Get the token from storage
   
   useEffect(() => {
@@ -23,7 +23,7 @@ function Dashboard() {
     },
   };
     axios
-      .get(`${BASE_URL}/get`,config)
+      .get(`/api/get`,config)
       .then((result) => {
         setTodos(result.data);
       })
@@ -34,7 +34,7 @@ function Dashboard() {
     if (!input.trim()) return;
 const token = localStorage.getItem('token')
     axios
-      .post(`${BASE_URL}/add`, { tasks: input },{ 
+      .post(`/api/add`, { tasks: input },{ 
         headers: {
           Authorization: `Bearer ${token}` 
         }
@@ -48,7 +48,7 @@ const token = localStorage.getItem('token')
 
   const handleDelete = (id) => {
     axios
-      .delete(`${BASE_URL}/delete/${id}`) // Ensure your backend route matches this
+      .delete(` /api/delete/${id}`) // Ensure your backend route matches this
       .then(() => {
         setTodos(todos.filter((t) => t._id !== id));
       })
@@ -58,7 +58,7 @@ const token = localStorage.getItem('token')
   const handleSaveEdit = (id, newTasksText) => {
     const token = localStorage.getItem('token')
     axios
-      .put(`${BASE_URL}/update/${id}`, { tasks: newTasksText },{ 
+      .put(` /api/update/${id}`, { tasks: newTasksText },{ 
         headers: {
           Authorization: `Bearer ${token}` // The Authorization header
         }
